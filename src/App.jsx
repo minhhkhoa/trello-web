@@ -1,6 +1,5 @@
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import theme from './theme'
 
 function App() {
 
