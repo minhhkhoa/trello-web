@@ -1,6 +1,6 @@
 //Board details
 import Container from '@mui/material/Container'
-import AppBar from '../../components/AppBar'
+import AppBar from '~/components/AppBar'
 import BoardContent from './BoardContent'
 import BoardBar from './BoardBar'
 
