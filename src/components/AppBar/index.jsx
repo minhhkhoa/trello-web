@@ -1,4 +1,3 @@
-import * as React from 'react'
 import Box from '@mui/material/Box'
 import ModeSelect from '~/components/ModeSelect'
 import AppsIcon from '@mui/icons-material/Apps'
@@ -37,9 +36,11 @@ function AppBar() {
           alignItems: 'center',
           gap: 0.5
         }}>
-          <SvgIcon component={TrelloIcon} inheritViewBox sx={{ color: 'primary.main' }} />
+          <SvgIcon component={TrelloIcon} inheritViewBox
+            fontSize = "small"
+            sx={{ color: 'primary.main' }} />
           <Typography variant='span' sx={{
-            fontsize: '1.2rem',
+            fontSize: '1.2rem',
             fontWeight: 'bold',
             color: 'primary.main'
           }}>Trello</Typography>
@@ -54,6 +55,7 @@ function AppBar() {
 
       </Box>
 
+      {/* right */}
       <Box sx={{
         display: 'flex',
         alignItems: 'center',
@@ -62,16 +64,16 @@ function AppBar() {
         <TextField id="outlined-search" label="Search..." type="search" size="small" />
         <ModeSelect />
         <Tooltip title="Notification">
-          <Badge color="secondary" variant="dot" sx={{ cursor: 'pointer' }}>
+          <Badge color="secondary" variant="dot" sx={{ cursor: 'pointer', color: 'primary.main' }}>
             <NotificationsNoneOutlinedIcon />
           </Badge>
         </Tooltip>
 
-        <Tooltip title="Notification" sx={{ cursor: 'pointer' }}>
+        <Tooltip title="Help" sx={{ cursor: 'pointer', color: 'primary.main' }}>
           <HelpOutlineOutlinedIcon />
         </Tooltip>
 
-        <Profile/>
+        <Profile />
       </Box>
     </Box>
   )
