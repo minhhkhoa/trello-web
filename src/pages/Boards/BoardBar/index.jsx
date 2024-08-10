@@ -13,13 +13,13 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd'
 
 
 const Menu_Styles = {
-  color: 'primary.main',
-  backgroundColor: 'white',
+  color: 'white',
+  bgcolor: 'transparent',
   border: 'none',
   paddingX: '5px',
-  borderRadius: '4px',
-  '& .MuiSvgIcon-root': {
-    color: 'primary.main'
+  borderRadius: '10px',
+  '.MuiSvgIcon-root': {
+    color: 'white'
   },
   '&:hover': {
     bgcolor: 'primary.50'
@@ -37,7 +37,8 @@ function BoardBar() {
       gap: 2,
       paddingX: 2,
       overflowX: 'auto',
-      borderTop: '1px solid #00bfa5'
+      borderBottom: '1px solid white',
+      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#223450' : '#1976d2')
     }}>
       <Box sx={{
         display: 'flex',
@@ -84,14 +85,27 @@ function BoardBar() {
         alignItems: 'center',
         gap: 2
       }}>
-        <Button variant="outlined" startIcon={<PersonAddIcon />}>Invite</Button>
+        <Button variant="outlined"
+          startIcon={<PersonAddIcon />}
+          sx={{
+            color: 'white',
+            borderColor: 'white',
+            '&:hover': {
+              borderColor: 'white'
+            }
+          }}
+        >
+          Invite
+        </Button>
         <AvatarGroup
           max={6}
           sx={{
+            gap: '10px',
             '& .MuiAvatar-root': {
-              width:'34px',
-              height:'34px',
-              fontSize: '16px'
+              width: '34px',
+              height: '34px',
+              fontSize: '16px',
+              border: 'none'
             }
           }}
         >
@@ -137,6 +151,25 @@ function BoardBar() {
               src="https://scontent.fhan9-1.fna.fbcdn.net/v/t39.30808-1/453907117_1171030640849320_4810181517144927636_n.jpg?stp=dst-jpg_p200x200&_nc_cat=110&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=Yjxy4ZnkwP0Q7kNvgFDUgsT&_nc_ht=scontent.fhan9-1.fna&oh=00_AYDAaEyKZQb9NlXuSIqOplzQAqkFY1_A24wBl8GQ2oglTw&oe=66BC0F43"
             />
           </Tooltip>
+          <Tooltip title="Khoahii">
+            <Avatar
+              alt="Khoahii"
+              src="https://scontent.fhan9-1.fna.fbcdn.net/v/t39.30808-1/453907117_1171030640849320_4810181517144927636_n.jpg?stp=dst-jpg_p200x200&_nc_cat=110&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=Yjxy4ZnkwP0Q7kNvgFDUgsT&_nc_ht=scontent.fhan9-1.fna&oh=00_AYDAaEyKZQb9NlXuSIqOplzQAqkFY1_A24wBl8GQ2oglTw&oe=66BC0F43"
+            />
+          </Tooltip>
+          <Tooltip title="Khoahii">
+            <Avatar
+              alt="Khoahii"
+              src="https://scontent.fhan9-1.fna.fbcdn.net/v/t39.30808-1/453907117_1171030640849320_4810181517144927636_n.jpg?stp=dst-jpg_p200x200&_nc_cat=110&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=Yjxy4ZnkwP0Q7kNvgFDUgsT&_nc_ht=scontent.fhan9-1.fna&oh=00_AYDAaEyKZQb9NlXuSIqOplzQAqkFY1_A24wBl8GQ2oglTw&oe=66BC0F43"
+            />
+          </Tooltip>
+          <Tooltip title="Khoahii">
+            <Avatar
+              alt="Khoahii"
+              src="https://scontent.fhan9-1.fna.fbcdn.net/v/t39.30808-1/453907117_1171030640849320_4810181517144927636_n.jpg?stp=dst-jpg_p200x200&_nc_cat=110&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=Yjxy4ZnkwP0Q7kNvgFDUgsT&_nc_ht=scontent.fhan9-1.fna&oh=00_AYDAaEyKZQb9NlXuSIqOplzQAqkFY1_A24wBl8GQ2oglTw&oe=66BC0F43"
+            />
+          </Tooltip>
+
         </AvatarGroup>
       </Box>
 

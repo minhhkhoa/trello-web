@@ -34,7 +34,7 @@ function Profile() {
         >
           <Avatar
             sx={{
-              width: 32, height: 32
+              width: 38, height: 38
             }}
             alt="Khoahii"
             src="https://scontent.fhan9-1.fna.fbcdn.net/v/t39.30808-1/453907117_1171030640849320_4810181517144927636_n.jpg?stp=dst-jpg_p200x200&_nc_cat=110&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=Yjxy4ZnkwP0Q7kNvgFDUgsT&_nc_ht=scontent.fhan9-1.fna&oh=00_AYDAaEyKZQb9NlXuSIqOplzQAqkFY1_A24wBl8GQ2oglTw&oe=66BC0F43"

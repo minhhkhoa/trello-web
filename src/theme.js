@@ -1,6 +1,5 @@
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 import { deepOrange, teal, orange, cyan } from '@mui/material/colors'
-import { BorderColor } from '@mui/icons-material'
 
 // Create a theme instance.
 const theme = extendTheme({
@@ -9,33 +8,23 @@ const theme = extendTheme({
     boardBarHeight: '58px'
   },
   colorSchemes: {
-    light: {
-      palette: {
-        primary: teal,
-        secondary: deepOrange
-      }
-    },
-    dark: {
-      palette: {
-        primary: cyan,
-        secondary: orange
-      }
-    }
+    light: {},
+    dark: {}
   },
   components: {
     MuiCssBaseline: {
-      styleOverrides:{
+      styleOverrides: {
         body: {
           '*::-webkit-scrollbar': {
             width: '8px',
             height: '8px'
           },
           '*::-webkit-scrollbar-thumb': {
-            backgroundColor: '#848895',
+            backgroundColor: '#dcdde1',
             borderRadius: '8px'
           },
           '*::-webkit-scrollbar-thumb:hover': {
-            backgroundColor: '#00AD83'
+            backgroundColor: 'white'
           }
         }
       }
@@ -49,26 +38,16 @@ const theme = extendTheme({
     },
     MuiInputLabel: {
       styleOverrides: {
-        root: ({ theme }) => ({
-          color: theme.palette.primary.main,
+        root: {
           fontSize: '0.875rem'
-        })
+        }
       }
     },
     MuiOutlinedInput: {
       styleOverrides: {
-        root: ({ theme }) => ({
-          color: theme.palette.primary.main,
-          fontSize: '0.875rem',
-          '.MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.primary.light
-          },
-          '&:hover': {
-            '.MuiOutlinedInput-notchedOutline': {
-              borderColor: theme.palette.primary.main
-            }
-          }
-        })
+        root: {
+          fontSize: '0.875rem'
+        }
       }
     }
   }
