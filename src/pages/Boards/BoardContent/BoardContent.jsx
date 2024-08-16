@@ -9,7 +9,8 @@ import {
   useSensor,
   useSensors,
   DragOverlay,
-  defaultDropAnimationSideEffects
+  defaultDropAnimationSideEffects,
+  closestCorners
 } from '@dnd-kit/core'
 import { useEffect, useState } from 'react'
 import {
@@ -121,7 +122,7 @@ function BoardContent(props) {
 
           //cập nhật lại cardOrderIds
           nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
-          
+
         }
 
 
@@ -170,7 +171,10 @@ function BoardContent(props) {
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
-      sensors={sensors}>
+      sensors={sensors}
+      //thuật toán phát hiện va chạm
+      collisionDetection={closestCorners}
+    >
       <Box sx={{
         bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#223450' : '#1976d2'),
         width: '100%',
