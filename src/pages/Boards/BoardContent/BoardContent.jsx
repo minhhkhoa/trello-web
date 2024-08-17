@@ -3,22 +3,24 @@ import ListColumns from './ListColumns/ListColumns'
 import { mapOrder } from '~/utils/sorts'
 import {
   DndContext,
-  // PointerSensor,
   MouseSensor,
   TouchSensor,
   useSensor,
   useSensors,
   DragOverlay,
   defaultDropAnimationSideEffects,
-  closestCorners
+  closestCorners,
+  pointerWithin,
+  getFirstCollision
 } from '@dnd-kit/core'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   arrayMove
 } from '@dnd-kit/sortable'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
+import { generatePlaceholderCard } from '~/utils/formatters'
 
 const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
@@ -46,6 +48,9 @@ function BoardContent(props) {
   const [activeDragItemType, setActiveDragItemType] = useState(null)
   const [activeDragItemData, setActiveDragItemData] = useState(null)
   const [oldColumnWhenDraggingCard, setOldColumnWhenDraggingCard] = useState(null)
+
+  //diem va cham cuoi cung
+  const lastOverId = useRef(null)
 
 
   useEffect(() => {
@@ -84,14 +89,21 @@ function BoardContent(props) {
       const nextActiveColumn = nextColumns.find(column => column._id === activeColumn._id)
       const nextOverColumn = nextColumns.find(column => column._id === overColumn._id)
 
+      //column cu
       if (nextActiveColumn) {
         //xóa card khỏi column cũ
         nextActiveColumn.cards = nextActiveColumn.cards.filter(card => card._id !== activeDragingCardId)
+
+        //neu rong them placeholderCard
+        if (isEmpty(nextActiveColumn.cards)) {
+          nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+        }
 
         //cập nhật lại cardOrderIds
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
       }
 
+      //column moi
       if (nextOverColumn) {
         //kiểm tra card đang kéo đã tồn tại ở column muốn chuyển hay chưa nếu có thì xóa nó trc
         nextOverColumn.cards = nextOverColumn.cards.filter(card => card._id !== activeDragingCardId)
@@ -103,6 +115,9 @@ function BoardContent(props) {
 
         //Them card đang kéo vào vị tri index moi ở cột cần đến
         nextOverColumn.cards = nextOverColumn.cards.toSpliced(newCardIndex, 0, rebuild_activeDraggingCardData)
+
+        //xoa placeholder di neu no dang ton tai
+        nextOverColumn.cards = nextOverColumn.cards.filter(card => !card.FE_PlaceholderCard)
 
         //cập nhật lại cardOrderIds
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
@@ -251,6 +266,44 @@ function BoardContent(props) {
     })
   }
 
+
+  //code lai thuat toan phat trine va cham
+  //args = arguments = cac tham so , doi so
+  const collisionDetectionStrategy = useCallback((args) => {
+    if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
+      return closestCorners({ ...args })
+    }
+
+    // tim diem giao nhau
+    const pointerInterSections = pointerWithin(args)
+
+    if (!pointerInterSections?.length) return
+
+    // const interSections = pointerInterSections.length > 0 ? pointerInterSections : rectIntersection(args)
+
+    //tim over id ddau tien trong pointerInterSections
+    let overId = getFirstCollision(pointerInterSections, 'id')
+
+    if (overId) {
+      const checkColumn = oderedColumnsState.find(column => column._id === overId)
+      if (checkColumn) {
+        overId = closestCorners({
+          ...args,
+          droppableContainers: args.droppableContainers.filter(container => {
+            return (container.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id))
+          })
+        })[0]?.id
+      }
+
+      lastOverId.current = overId
+      return [{ id: overId }]
+    }
+
+
+    return lastOverId.current ? [{ id: lastOverId.current }] : []
+
+  }, [activeDragItemType, oderedColumnsState])
+
   return (
     <DndContext
       onDragStart={handleDragStart}
@@ -258,7 +311,8 @@ function BoardContent(props) {
       onDragEnd={handleDragEnd}
       sensors={sensors}
       //thuật toán phát hiện va chạm
-      collisionDetection={closestCorners}
+      // collisionDetection={closestCorners}
+      collisionDetection={collisionDetectionStrategy}
     >
       <Box sx={{
         bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#223450' : '#1976d2'),
